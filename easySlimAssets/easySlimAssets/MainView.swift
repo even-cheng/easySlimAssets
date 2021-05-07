@@ -47,6 +47,7 @@ class MainView: NSView {
         statusField.stringValue = "已选择项目文件";
         sourceProjectView.title = extensionPathUrl.pathComponents.last!
         projectPath = filename
+        self.showbutton.isHidden = true
     }
 
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
@@ -95,10 +96,10 @@ class MainView: NSView {
             return
         }
         statusField.stringValue = "正在检查，这可能需要一点时间，请稍等...";
-        
+
         let excludePaths: [String] = []
         let resourceExtentions = ["imageset", "jpg", "png", "gif", "pdf"]
-        let fileExtensions = ["h", "m", "mm", "swift", "xib", "storyboard", "plist", "html"]
+        let fileExtensions = ["h", "m", "mm", "swift", "xib", "storyboard", "plist", "html", "json"]
 
         let fengNiao = FengNiao(projectPath: projectPath!,
                                 excludedPaths: excludePaths,
@@ -116,11 +117,23 @@ class MainView: NSView {
             
             DispatchQueue.main.async {
                 self.showbutton.isHidden = false
-                self.statusField.stringValue = "共发现\(self.unusedFiles!.count)个未引用素材，点击处理 ->"
+            
+                let memory = self.calculateMemorySizeWithUnusedFiles()
+                self.statusField.stringValue = "共发现\(self.unusedFiles!.count)个未引用素材, 占用\(memory)MB空间，点击处理 ->"
             }
         }
     }
 
+    private func calculateMemorySizeWithUnusedFiles() -> String{
+        
+        var size: Double = 0.0
+        for file in self.unusedFiles! {
+            size += Double(file.size)
+        }
+        let memory = String (format: "%.2f" , size/1024/1024)
+        return memory
+    }
+    
     @IBAction func showResult(_ sender: Any) {
      
         var allFilePaths: [String] = []
@@ -146,7 +159,9 @@ class MainView: NSView {
                     self?.showbutton.isHidden = true
                 } else {
                     self?.showbutton.isHidden = false
-                    self?.statusField.stringValue = "清理成功。剩余\(choosed!.count)个未引用素材，继续处理 ->"
+                    
+                    let memory = self!.calculateMemorySizeWithUnusedFiles()
+                    self?.statusField.stringValue = "清理成功。剩余\(choosed!.count)个未引用素材, 占用\(memory)MB空间, 继续处理 ->"
                 }
             }
         }
