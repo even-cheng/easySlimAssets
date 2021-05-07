@@ -9,6 +9,25 @@ import Cocoa
 
 class MainView: NSView {
 
+    @IBOutlet weak var target_h: NSButton!
+    @IBOutlet weak var target_m: NSButton!
+    @IBOutlet weak var target_mm: NSButton!
+    @IBOutlet weak var target_swift: NSButton!
+    @IBOutlet weak var target_xib: NSButton!
+    @IBOutlet weak var target_css: NSButton!
+    @IBOutlet weak var target_plist: NSButton!
+    @IBOutlet weak var target_html: NSButton!
+    @IBOutlet weak var target_json: NSButton!
+    @IBOutlet weak var target_sb: NSButton!
+    @IBOutlet weak var target_more: NSTextField!
+    
+    @IBOutlet weak var check_imageset: NSButton!
+    @IBOutlet weak var check_png: NSButton!
+    @IBOutlet weak var check_jpg: NSButton!
+    @IBOutlet weak var check_gif: NSButton!
+    @IBOutlet weak var check_pdf: NSButton!
+    @IBOutlet weak var check_more: NSTextField!
+    
     @IBOutlet weak var statusField: NSTextField!
     @IBOutlet weak var sourceProjectView: NSButton!
     @IBOutlet weak var showbutton: NSButton!
@@ -17,6 +36,9 @@ class MainView: NSView {
     
     private var projectPath: String?
     private var unusedFiles: [FileInfo]?
+
+    private var targetTypes: [String]?
+    private var checkTypes: [String]?
 
     //MARK: Functions
     override init(frame frameRect: NSRect) {
@@ -98,8 +120,10 @@ class MainView: NSView {
         statusField.stringValue = "正在检查，这可能需要一点时间，请稍等...";
 
         let excludePaths: [String] = []
-        let resourceExtentions = ["imageset", "jpg", "png", "gif", "pdf"]
-        let fileExtensions = ["h", "m", "mm", "swift", "xib", "storyboard", "plist", "html", "json", "css", "less"]
+        
+
+        let resourceExtentions = getAllowCheckFile()
+        let fileExtensions = getAllowTargets()
 
         var fengNiao = FengNiao(projectPath: projectPath!,
                                 excludedPaths: excludePaths,
@@ -128,6 +152,76 @@ class MainView: NSView {
         }
     }
 
+    private func getAllowTargets() -> [String] {
+
+        var targets: [String] = []
+        if target_h.state == .on {
+            targets.append("h")
+        }
+        if target_m.state == .on {
+            targets.append("m")
+        }
+        if target_mm.state == .on {
+            targets.append("mm")
+        }
+        if target_swift.state == .on {
+            targets.append("swift")
+        }
+        if target_xib.state == .on {
+            targets.append("xib")
+        }
+        if target_sb.state == .on {
+            targets.append("storyboard")
+        }
+        if target_plist.state == .on {
+            targets.append("plist")
+        }
+        if target_html.state == .on {
+            targets.append("html")
+        }
+        if target_json.state == .on {
+            targets.append("json")
+        }
+        if target_css.state == .on {
+            targets.append("css")
+        }
+        let more = target_more.stringValue;
+        let moreTarget = more.components(separatedBy: ",")
+        for tar in moreTarget {
+            targets.append(tar)
+        }
+        
+        return targets
+    }
+    
+    private func getAllowCheckFile() -> [String] {
+
+        var checks: [String] = []
+        if check_imageset.state == .on {
+            checks.append("imageset")
+        }
+        if check_jpg.state == .on {
+            checks.append("jpg")
+        }
+        if check_png.state == .on {
+            checks.append("png")
+        }
+        if check_gif.state == .on {
+            checks.append("gif")
+        }
+        if check_pdf.state == .on {
+            checks.append("pdf")
+        }
+       
+        let more = check_more.stringValue;
+        let moreCheck = more.components(separatedBy: ",")
+        for check in moreCheck {
+            checks.append(check)
+        }
+        
+        return checks
+    }
+    
     private func calculateMemorySizeWithUnusedFiles() -> String{
         
         var size: Double = 0.0
