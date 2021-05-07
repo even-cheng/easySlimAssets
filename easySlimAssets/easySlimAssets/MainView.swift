@@ -99,13 +99,17 @@ class MainView: NSView {
 
         let excludePaths: [String] = []
         let resourceExtentions = ["imageset", "jpg", "png", "gif", "pdf"]
-        let fileExtensions = ["h", "m", "mm", "swift", "xib", "storyboard", "plist", "html", "json"]
+        let fileExtensions = ["h", "m", "mm", "swift", "xib", "storyboard", "plist", "html", "json", "css", "less"]
 
-        let fengNiao = FengNiao(projectPath: projectPath!,
+        var fengNiao = FengNiao(projectPath: projectPath!,
                                 excludedPaths: excludePaths,
                                 resourceExtensions: resourceExtentions,
                                 searchInFileExtensions: fileExtensions)
-        
+        fengNiao.searchProgress = {[weak self] (filename: String) in
+            DispatchQueue.main.async {
+                self?.statusField.stringValue = "正在检查: \(filename)"
+            }
+        }
         DispatchQueue.global().async {
             self.unusedFiles = try! fengNiao.unusedFiles()
             if self.unusedFiles!.isEmpty {

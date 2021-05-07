@@ -106,6 +106,8 @@ public struct FengNiao {
         return resourceExtensions.filter { !regularDirExtensions.contains($0) }
     }
     
+    var searchProgress: ((String)->())?
+
     public init(projectPath: String, excludedPaths: [String], resourceExtensions: [String], searchInFileExtensions: [String]) {
         let path = Path(projectPath).absolute()
         self.projectPath = path
@@ -216,8 +218,12 @@ public struct FengNiao {
             return []
         }
         
+        let totalCount = subPaths.count
+        var currentIndex = 0
+        
         var result = [String]()
         for subPath in subPaths {
+            currentIndex += 1
             if subPath.lastComponent.hasPrefix(".") {
                 continue
             }
@@ -232,6 +238,10 @@ public struct FengNiao {
                 let fileExt = subPath.extension ?? ""
                 guard searchInFileExtensions.contains(fileExt) else {
                     continue
+                }
+                
+                if self.searchProgress != nil {
+                    self.searchProgress!(subPath.lastComponent)
                 }
                 
                 let fileType = FileType(ext: fileExt)

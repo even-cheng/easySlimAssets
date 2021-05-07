@@ -61,7 +61,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="easySlimAssets" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="SlimAssets" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -91,8 +91,8 @@
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="easySlimAssets" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="m2S-Jp-Qdl" customClass="MainView" customModule="easySlimAssets" customModuleProvider="target">
+                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="SlimAssets" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="m2S-Jp-Qdl" customClass="MainView" customModule="SlimAssets" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="400" height="350"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -109,7 +109,7 @@
                                     <action selector="checkProject:" target="m2S-Jp-Qdl" id="F2e-SN-xV9"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qUB-nC-DmQ" customClass="KeyEventTextField" customModule="easySlimAssets" customModuleProvider="target">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qUB-nC-DmQ" customClass="KeyEventTextField" customModule="SlimAssets" customModuleProvider="target">
                                 <rect key="frame" x="28" y="10" width="284" height="15"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="准备就绪" id="qJA-5D-uvM">
                                     <font key="font" metaFont="cellTitle"/>
@@ -122,7 +122,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="160" id="Y0I-SL-EFr"/>
                                 </constraints>
-                                <buttonCell key="cell" type="bevel" title=".xcodeproj" bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Meg-55-q1z">
+                                <buttonCell key="cell" type="bevel" title="请拖入工程所在文件夹" bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Meg-55-q1z">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system" size="15"/>
                                 </buttonCell>
