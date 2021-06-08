@@ -32,6 +32,8 @@ class MainView: NSView {
     @IBOutlet weak var sourceProjectView: NSButton!
     @IBOutlet weak var showbutton: NSButton!
     
+    @IBOutlet weak var excludeField: NSTextField!
+    
     private var fileTypeIsOk = false
     
     private var projectPath: String?
@@ -119,8 +121,11 @@ class MainView: NSView {
         }
         statusField.stringValue = "正在检查，这可能需要一点时间，请稍等...";
 
-        let excludePaths: [String] = []
-        
+        var excludePaths: [String] = []
+        let excludeNames = excludeField.stringValue.components(separatedBy: ",")
+        for exclude in excludeNames {
+            excludePaths.append(exclude)
+        }
 
         let resourceExtentions = getAllowCheckFile()
         let fileExtensions = getAllowTargets()
